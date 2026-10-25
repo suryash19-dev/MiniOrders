@@ -23,4 +23,14 @@ public class CustomerRepository(AppDbContext context) : ICustomerRepository
     {
         return context.Customers.AnyAsync(c => c.Id == id, ct);
     }
+
+    public async Task<IReadOnlyList<Customer>> GetAllWithDetailsAsync(CancellationToken ct)
+    {
+        return await context.Customers
+            .AsNoTracking()
+            .Include(c => c.Profile)
+            .Include(c => c.Orders.OrderByDescending(o => o.OrderDate))
+            .OrderBy(c => c.Name)
+            .ToListAsync(ct);
+    }
 }

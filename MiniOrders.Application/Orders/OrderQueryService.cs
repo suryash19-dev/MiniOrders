@@ -25,4 +25,10 @@ public class OrderQueryService : IOrderQueryService
         var orders = await _uow.Orders.GetByCustomerIdAsync(customerId, ct);
         return _mapper.Map<IReadOnlyList<OrderDto>>(orders);
     }
+
+    public async Task<IReadOnlyList<OrderDto>> GetAllOrdersAsync(CancellationToken ct)
+    {
+        var orders = await _uow.Orders.GetAllAsync(ct);
+        return _mapper.Map<IReadOnlyList<OrderDto>>(orders);
+    }
 }

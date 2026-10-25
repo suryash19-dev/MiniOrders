@@ -24,4 +24,24 @@ public class CustomersController : ControllerBase
         var id = await _commandService.CreateCustomerAsync(command, ct);
         return StatusCode(StatusCodes.Status201Created, new { id });
     }
+
+    [HttpGet("{id:guid}")]
+    [ProducesResponseType(typeof(CustomerDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<CustomerDto>> GetById(Guid id, CancellationToken ct)
+    {
+        var customer = await _queryService.GetCustomerByIdAsync(id, ct);
+        if (customer is null)
+            return NotFound();
+
+        return Ok(customer);
+    }
+
+    [HttpGet]
+    [ProducesResponseType(typeof(IReadOnlyList<CustomerDto>), StatusCodes.Status200OK)]
+    public async Task<ActionResult<IReadOnlyList<CustomerDto>>> GetAll(CancellationToken ct)
+    {
+        var customers = await _queryService.GetAllCustomersAsync(ct);
+        return Ok(customers);
+    }
 }

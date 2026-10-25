@@ -22,4 +22,10 @@ public class CustomerQueryService : ICustomerQueryService
 
         return _mapper.Map<CustomerDto>(customer);
     }
+
+    public async Task<IReadOnlyList<CustomerDto>> GetAllCustomersAsync(CancellationToken ct)
+    {
+        var customers = await _uow.Customers.GetAllWithDetailsAsync(ct);
+        return _mapper.Map<IReadOnlyList<CustomerDto>>(customers);
+    }
 }

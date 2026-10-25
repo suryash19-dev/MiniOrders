@@ -36,4 +36,11 @@ public class OrdersController : ControllerBase
     {
         return Ok(await _queryService.GetOrdersByCustomerIdAsync(customerId, ct));
     }
+
+    [HttpGet("~/api/orders")]
+    [ProducesResponseType(typeof(IReadOnlyList<OrderDto>), StatusCodes.Status200OK)]
+    public async Task<ActionResult<IReadOnlyList<OrderDto>>> GetAll(CancellationToken ct)
+    {
+        return Ok(await _queryService.GetAllOrdersAsync(ct));
+    }
 }

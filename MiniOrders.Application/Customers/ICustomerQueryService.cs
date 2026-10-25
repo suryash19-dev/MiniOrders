@@ -2,4 +2,5 @@
 public interface ICustomerQueryService
 {
     Task<CustomerDto> GetCustomerByIdAsync(Guid id, CancellationToken ct);
+    Task <IReadOnlyList<CustomerDto>> GetAllCustomersAsync(CancellationToken ct);
 }

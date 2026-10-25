@@ -18,4 +18,12 @@ public class OrderRepository(AppDbContext context) : IOrderRepository
             .OrderByDescending(o => o.OrderDate)
             .ToListAsync(ct);
     }
+
+    public async Task<IReadOnlyList<Order>> GetAllAsync(CancellationToken ct)
+    {
+        return await context.Orders
+            .AsNoTracking()
+            .OrderByDescending(o => o.OrderDate)
+            .ToListAsync(ct);
+    }
 }
