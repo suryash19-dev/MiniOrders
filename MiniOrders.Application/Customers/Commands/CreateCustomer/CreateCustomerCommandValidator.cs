@@ -9,5 +9,7 @@ public class CreateCustomerCommandValidator : AbstractValidator<CreateCustomerCo
             .NotEmpty().WithMessage("Name is required.").MaximumLength(100);
         RuleFor(x => x.Address)
             .NotEmpty().MaximumLength(200);
+        RuleFor(x => x.PhoneNumber)
+            .NotEmpty().WithMessage("Phone number is required.").MaximumLength(20);
     }
 }
